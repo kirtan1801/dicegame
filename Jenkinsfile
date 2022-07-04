@@ -7,7 +7,8 @@ pipeline{
 	stages{
 	  stage("build"){
 		  steps{
-		    echo 'building the application'
+			  echo 'building the application'
+			  sh 'make'
 		  }
 	  }
 	  stage("test"){
@@ -17,13 +18,20 @@ pipeline{
 			  }
 		  }
 		  steps{
-		    echo 'testing the application'
+			  echo 'testing the application'
+			  sh 'make check || true'
 		  }
 	  }
 	  stage("deploy"){
+		  when {
+			  expression {
+                		currentBuild.result == null || currentBuild.result == 'SUCCESS' 
+			  }
+		  }
 		  steps{
-		    echo 'deploying the application'
-		    echo "deploying version ${params.VERSION}"
+			  echo 'deploying the application'
+			  echo "deploying version ${params.VERSION}"
+			  sh 'make publish'
 		  }
 	  }
 	}  
