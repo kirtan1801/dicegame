@@ -8,7 +8,6 @@ pipeline{
 	  stage("build"){
 		  steps{
 			  echo 'building the application'
-			  sh 'make'
 		  }
 	  }
 	  stage("test"){
@@ -19,7 +18,6 @@ pipeline{
 		  }
 		  steps{
 			  echo 'testing the application'
-			  sh 'make check || true'
 		  }
 	  }
 	  stage("deploy"){
@@ -31,7 +29,6 @@ pipeline{
 		  steps{
 			  echo 'deploying the application'
 			  echo "deploying version ${params.VERSION}"
-			  sh 'make publish'
 		  }
 	  }
 	}  
